@@ -1,5 +1,4 @@
-import { useEffect, useState } from "react";
-import { getPackages } from "../../services/packageService";
+import { useState } from "react";
 
 export default function OpenTableModal({
   table,
@@ -7,76 +6,130 @@ export default function OpenTableModal({
   onClose,
   onSubmit
 }) {
-  const [packages, setPackages] = useState([]);
-  const [packageId, setPackageId] = useState("");
-  const [customerCount, setCustomerCount] = useState(1);
+  const [packageId, setPackageId] = useState("1");
+  const [customer, setCustomer] = useState(1);
+  const [packageOpen, setPackageOpen] = useState(false);
 
-  useEffect(() => {
-    loadPackages();
-  }, []);
+  if (!table) return null;
 
-  async function loadPackages() {
-    const res = await getPackages();
-    setPackages(res.data || []);
-  }
+  const packages = [
+    { id: "1", name: "Buffet Standard 299" },
+    { id: "2", name: "Buffet Premium 499" },
+    { id: "3", name: "Buffet Platinum 699" }
+  ];
 
-  function submit() {
-    if (!packageId) {
-      alert("กรุณาเลือก Package");
-      return;
-    }
+  const selectedPackage = packages.find((item) => item.id === packageId);
 
+  function handleSubmit() {
     onSubmit({
       table_id: table.id,
       package_id: Number(packageId),
-      customer_count: Number(customerCount)
+      customer_count: Number(customer)
     });
   }
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/50">
-      <div className="w-[420px] rounded-2xl bg-white p-6">
-        <h2 className="text-xl font-bold">เปิดโต๊ะ {table.table_number}</h2>
+    <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/70 p-4 backdrop-blur-sm animate-fade-in">
+      {/* MODAL CARD */}
+      <div className="w-full max-w-md rounded-3xl border border-zinc-850 bg-zinc-900 p-6 text-zinc-100 shadow-2xl">
+        
+        {/* HEADER */}
+        <div className="mb-6 text-center">
+          <p className="text-xs font-bold tracking-[0.2em] text-zinc-500">FOXY SHABU</p>
+          <h3 className="mt-1 text-2xl font-black">โต๊ะ {table.table_number}</h3>
+        </div>
 
-        <label className="mt-5 block">จำนวนลูกค้า</label>
-        <input
-          type="number"
-          min="1"
-          value={customerCount}
-          onChange={(e) => setCustomerCount(e.target.value)}
-          className="w-full rounded-xl border p-3"
-        />
+        <div className="space-y-5">
+          {/* PACKAGE SELECTOR (CUSTOM DROPDOWN) */}
+          <div className="relative">
+            <label className="text-xs font-bold text-zinc-400 block mb-2">เลือกแพ็กเกจบุฟเฟต์</label>
+            <button
+              type="button"
+              onClick={() => setPackageOpen(!packageOpen)}
+              className={`flex w-full items-center justify-between rounded-xl border p-3 text-sm font-medium transition-all duration-200 ${
+                packageOpen
+                  ? "border-yellow-500 bg-zinc-950 text-yellow-400 ring-1 ring-yellow-500"
+                  : "border-zinc-800 bg-zinc-950 text-zinc-200 hover:border-zinc-700"
+              }`}
+            >
+              <span>{selectedPackage?.name || "เลือกแพ็กเกจ"}</span>
+              <span className={`text-xs transition-transform duration-200 opacity-60 ${packageOpen ? "rotate-180 text-yellow-400 opacity-100" : ""}`}>
+                ▼
+              </span>
+            </button>
 
-        <label className="mt-5 block">Package</label>
-        <select
-          value={packageId}
-          onChange={(e) => setPackageId(e.target.value)}
-          className="w-full rounded-xl border p-3"
-        >
-          <option value="">เลือก Package</option>
-          {packages.map((pkg) => (
-            <option key={pkg.id} value={pkg.id}>
-              {pkg.name} - {pkg.price_per_person} บาท
-            </option>
-          ))}
-        </select>
+            {packageOpen && (
+              <div className="absolute z-50 mt-2 max-h-60 w-full overflow-y-auto rounded-xl border border-zinc-800 bg-zinc-950 p-1 shadow-2xl shadow-black">
+                {packages.map((item) => {
+                  const isSelected = item.id === packageId;
+                  return (
+                    <button
+                      key={item.id}
+                      type="button"
+                      onClick={() => {
+                        setPackageId(item.id);
+                        setPackageOpen(false);
+                      }}
+                      className={`w-full rounded-lg p-3 text-left text-sm transition-colors duration-150 ${
+                        isSelected
+                          ? "bg-yellow-950/50 text-yellow-400 font-bold"
+                          : "text-zinc-300 hover:bg-zinc-900 hover:text-white"
+                      }`}
+                    >
+                      {item.name}
+                    </button>
+                  );
+                })}
+              </div>
+            )}
+          </div>
 
-        <div className="mt-8 flex justify-end gap-3">
+          {/* CUSTOMER COUNT SELECTOR */}
+          <div>
+            <label className="text-xs font-bold text-zinc-400 block mb-2">จำนวนลูกค้า (คน)</label>
+            <div className="flex items-center gap-3 rounded-xl border border-zinc-800 bg-zinc-950 p-2">
+              <button
+                type="button"
+                disabled={customer <= 1}
+                onClick={() => setCustomer(Math.max(1, customer - 1))}
+                className="flex h-10 w-12 items-center justify-center rounded-lg bg-zinc-900 text-xl font-bold transition active:scale-90 disabled:opacity-30 disabled:pointer-events-none"
+              >
+                -
+              </button>
+              <div className="flex-1 text-center font-black text-lg text-zinc-100">
+                {customer}
+              </div>
+              <button
+                type="button"
+                onClick={() => setCustomer(customer + 1)}
+                className="flex h-10 w-12 items-center justify-center rounded-lg bg-zinc-900 text-xl font-bold transition active:scale-90"
+              >
+                +
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* ACTION BUTTONS */}
+        <div className="mt-8 flex gap-3">
           <button
+            type="button"
+            disabled={loading}
             onClick={onClose}
-            className="rounded-xl bg-gray-300 px-5 py-2"
+            className="flex-1 rounded-xl border border-zinc-800 py-3 text-sm font-bold text-zinc-400 transition hover:bg-zinc-850 hover:text-zinc-200 active:scale-95 disabled:opacity-50"
           >
             ยกเลิก
           </button>
-
           <button
+            type="button"
             disabled={loading}
-            onClick={submit}
-            className="rounded-xl bg-green-600 px-5 py-2 text-white"
+            onClick={handleSubmit}
+            className="flex-1 rounded-xl bg-emerald-600 py-3 text-sm font-bold text-white transition hover:bg-emerald-500 active:scale-95 disabled:opacity-50 flex justify-center items-center"
           >
-            {loading ? "กำลังเปิด..." : "เปิดโต๊ะ"}
+            {loading ? "กำลังเปิดโต๊ะ..." : "เปิดโต๊ะ"}
           </button>
         </div>
+
       </div>
     </div>
   );
