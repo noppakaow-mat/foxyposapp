@@ -11,7 +11,7 @@ export default function Header() {
   };
 
   return (
-    <header className="flex h-16 items-center justify-between bg-black px-6 text-white border-b-2 border-yellow-400">
+    <header className="flex h-16 items-center justify-between bg-black px-6 text-white border-b border-yellow-500/30">
       {/* LEFT */}
       <div>
         <h1 className="text-xs font-bold font-poppins">FOXY POS</h1>
