@@ -135,7 +135,6 @@ export default function MenuCatalogScreen() {
                 alt="Menu"
                 className="h-5 w-5 invert"
               />
-
               <span>
                 รายการที่สั่ง
               </span>
@@ -241,7 +240,7 @@ export default function MenuCatalogScreen() {
           <div className="flex items-center gap-3">
             <img src={cartIcon} alt="Cart" className="w-8 invert" />
             <div>
-              <p className="text-sm text-zinc-400">{cartItemCount} รายการ</p>
+              <p className="text-sm text-zinc-400">{cartItemCount}รายการ</p>
               <p className="text-lg font-black text-yellow-400">
                 ฿{formatPrice(getTotalPrice(cart))}
               </p>

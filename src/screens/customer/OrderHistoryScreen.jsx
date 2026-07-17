@@ -83,7 +83,7 @@ export default function OrderHistoryScreen() {
                                     ORDER #{order.order_number}
                                 </p>
 
-                                <p className="text-xs text-zinc-400">
+                                <p className="text-xs text-green-400">
                                     {order.status}
                                 </p>
 
