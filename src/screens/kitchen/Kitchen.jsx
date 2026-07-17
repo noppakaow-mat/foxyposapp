@@ -1,7 +1,8 @@
 import { useEffect, useState } from "react";
 import socket from "./kitchenSocket";
 import { API_URL } from "../../services/Api";
-
+import arrowUp from "../../assets/icons/arrowup.svg"
+import arrowDown from "../../assets/icons/arrowdown.svg";
 const API = API_URL;
 
 // =====================================
@@ -205,9 +206,11 @@ export default function KitchenScreen() {
                             </span>
                           )}
 
-                          <span className="text-xs text-zinc-500 mt-1">
-                            {isOpen ? "▲" : "▼"}
-                          </span>
+                          <img
+                            src={isOpen ? arrowUp : arrowDown}
+                            alt="toggle"
+                            className="w-10 h-10 text-yellow-400"
+                          />
                         </div>
                       </button>
 
