@@ -91,13 +91,17 @@ input[type="number"] {
   -webkit-appearance: auto;
   -moz-appearance: number-input;
 }
-
+/* Remove number input arrows */
 input[type="number"]::-webkit-inner-spin-button,
 input[type="number"]::-webkit-outer-spin-button {
-  appearance: auto;
-  -webkit-appearance: inner-spin-button;
-  opacity: 1;
+    -webkit-appearance: none;
+    margin: 0;
 }
+
+input[type="number"] {
+    -moz-appearance: textfield;
+}
+
 /* ==========================
    Breakpoints
 ========================== */
