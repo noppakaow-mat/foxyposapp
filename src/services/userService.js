@@ -7,7 +7,7 @@ export const createUser = (data) =>
   api.post("/users", data);
 // role
 export const updateRole = (id, role) =>
-  api.patch(`/users/${id}/role`, { role });
+  api.put(`/users/${id}/role`, { role });
 // deleteuser
 export const deleteUser = (id) =>
   api.delete(`/users/${id}`);

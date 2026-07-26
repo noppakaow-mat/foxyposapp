@@ -1,24 +1,35 @@
+import { Crown, BadgeDollarSign, ChefHat } from "lucide-react";
+
 export default function RoleBadge({ role }) {
+  const roles = {
+    manager: {
+      label: "Manager",
+      color: "bg-black text-white border border-black",
+    },
 
-  const roleStyle = {
-    manager: "bg-purple-100 text-purple-700",
-    cashier: "bg-blue-100 text-blue-700",
-    kitchen: "bg-orange-100 text-orange-700"
+    cashier: {
+      label: "Cashier",
+      color: "bg-gray-100 text-gray-800 border border-gray-300",
+    },
+
+    kitchen: {
+      label: "Kitchen",
+      color: "bg-white text-gray-800 border border-gray-300",
+    },
   };
 
-
-  const roleName = {
-    manager: "Manager",
-    cashier: "Cashier",
-    kitchen: "Kitchen"
+  const current = roles[role] || {
+    label: role,
+    color: "bg-gray-100 text-gray-700 border border-gray-300",
+    icon: null,
   };
-
 
   return (
     <span
-      className={`px-3 py-1 rounded-full text-xs font-semibold ${roleStyle[role] || "bg-gray-100 text-gray-700"}`}
+      className={`inline-flex items-center gap-2 rounded-full px-3 py-1.5 text-xs font-semibold ${current.color}`}
     >
-      {roleName[role] || role}
+      {current.icon}
+      {current.label}
     </span>
   );
 }

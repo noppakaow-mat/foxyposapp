@@ -1,62 +1,114 @@
 import api from "./api";
 
-// Get all products
+// ==========================
+// GET ALL STOCKS
+// ==========================
 export const getStocks = async () => {
   const res = await api.get("/stocks");
   return res.data;
 };
 
-// Get product by id
+
+
+// ==========================
+// GET STOCK BY ID
+// ==========================
 export const getStockById = async (id) => {
   const res = await api.get(`/stocks/${id}`);
   return res.data;
+
 };
 
-// Create product
+
+
+// ==========================
+// CREATE STOCK
+// ==========================
 export const createStock = async (data) => {
-  const res = await api.post("/stocks", data);
+  const res = await api.post(
+    "/stocks",
+    data
+  );
+
   return res.data;
 };
 
-// Update product
+
+
+// ==========================
+// UPDATE STOCK
+// ==========================
 export const updateStock = async (id, data) => {
-  const res = await api.put(`/stocks/${id}`, data);
+  const res = await api.put(
+    `/stocks/${id}`,
+    data
+  );
   return res.data;
+
 };
 
-// Delete product
+
+
+// ==========================
+// DELETE STOCK
+// ==========================
 export const deleteStock = async (id) => {
-  const res = await api.delete(`/stocks/${id}`);
+
+  const res = await api.delete(
+    `/stocks/${id}`
+  );
   return res.data;
 };
 
-// Increase stock
+
+
+// ==========================
+// INCREASE STOCK
+// ==========================
 export const increaseStock = async (id, quantity) => {
-  const res = await api.patch(`/stocks/${id}/increase`, {
-    quantity,
-  });
-
+  const res = await api.put(
+    `/stocks/${id}/increase`,
+    {
+      quantity
+    }
+  );
   return res.data;
+
 };
 
-// Decrease stock
+
+
+
+// ==========================
+// DECREASE STOCK
+// ==========================
 export const decreaseStock = async (id, quantity) => {
-  const res = await api.patch(`/stocks/${id}/decrease`, {
-    quantity,
-  });
+  const res = await api.put(
+    `/stocks/${id}/decrease`,
+    {
+      quantity
+    }
+  );
+
 
   return res.data;
+
 };
-// Upload Excel Stock
+
+
+
+
+// ==========================
+// UPLOAD EXCEL STOCK
+// ==========================
 export const uploadStockExcel = async (file) => {
 
-  const formData = new FormData();
 
+  const formData = new FormData();
   formData.append(
     "file",
     file
   );
-
 
   const res = await api.post(
     "/stocks/upload",
@@ -67,7 +119,6 @@ export const uploadStockExcel = async (file) => {
       }
     }
   );
-
 
   return res.data;
 

@@ -12,7 +12,7 @@
   "dependencies": {
     "@tailwindcss/vite": "^4.3.2",
     "axios": "^1.18.1",
-    "lucide-react": "^1.26.0",
+    "lucide-react": "^1.27.0",
     "omise": "^1.1.0",
     "qrcode.react": "^4.2.0",
     "react": "^19.2.7",
