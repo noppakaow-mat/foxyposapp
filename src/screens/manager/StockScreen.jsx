@@ -27,75 +27,48 @@ export default function StockScreen() {
 
 
     useEffect(() => {
-
         loadStocks();
-
     }, []);
 
 
 
     async function loadStocks() {
-
         try {
-
             const data = await getStocks();
-
             setStocks(data);
-
-
         } catch (error) {
-
             console.error(
                 "Load stock error:",
                 error
             );
-
-
         } finally {
-
             setLoading(false);
-
         }
-
     }
 
 
 
     const handleChangeStock = (id, value) => {
-
         setStocks(prev =>
-
             prev.map(item =>
-
                 item.id === id
-
                     ? {
                         ...item,
                         quantity: value
                     }
-
                     :
-
                     item
-
             )
-
         );
-
     };
 
 
-
     if (loading) {
-
         return (
-
             <div className="p-6">
                 Loading stock...
             </div>
-
         );
-
     }
 
 
@@ -104,19 +77,13 @@ export default function StockScreen() {
 
         <div className="space-y-6">
 
-
             <div className="flex justify-end gap-3">
-
-
                 <button
                     onClick={() => setOpenAdd(true)}
                     className="flex items-center gap-2 bg-yellow-500 hover:bg-yellow-600 text-white px-4 py-2 rounded-xl font-semibold"
                 >
-
                     + Add Product
-
                 </button>
-
 
 
                 <ImportExcelButton
@@ -127,11 +94,7 @@ export default function StockScreen() {
                         )
                     }
                 />
-
-
             </div>
-
-
 
 
             <StockTable
@@ -146,7 +109,6 @@ export default function StockScreen() {
                     )
                 }
 
-
                 onDecrease={(id, q) =>
                     handleDecrease(
                         id,
@@ -155,9 +117,7 @@ export default function StockScreen() {
                     )
                 }
 
-
                 onChangeStock={handleChangeStock}
-
 
                 onUpdate={(id, q) =>
                     handleUpdate(
@@ -166,7 +126,6 @@ export default function StockScreen() {
                         loadStocks
                     )
                 }
-
 
                 onDelete={(id) =>
                     handleDelete(
@@ -178,8 +137,6 @@ export default function StockScreen() {
             />
 
 
-
-
             <AddStockModal
 
                 open={openAdd}
@@ -187,8 +144,6 @@ export default function StockScreen() {
                 onClose={() =>
                     setOpenAdd(false)
                 }
-
-
                 onSave={(data) =>
                     handleCreateStock(
                         data,
@@ -196,10 +151,7 @@ export default function StockScreen() {
                         () => setOpenAdd(false)
                     )
                 }
-
             />
-
-
         </div>
 
     );
