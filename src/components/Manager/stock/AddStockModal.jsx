@@ -9,20 +9,21 @@ export default function AddStockModal({
 
     const [form, setForm] = useState({
         name: "",
-        quantity: 0,
+        quantity: "",
         unit: "ชิ้น",
     });
 
 
     if (!open) return null;
 
-
     const handleChange = (e) => {
 
-        setForm({
-            ...form,
-            [e.target.name]: e.target.value,
-        });
+        const { name, value } = e.target;
+
+        setForm(prev => ({
+            ...prev,
+            [name]: value,
+        }));
 
     };
 
@@ -31,13 +32,13 @@ export default function AddStockModal({
 
         onSave({
             ...form,
-            quantity: Number(form.quantity),
+            stock_quantity: Number(form.quantity || 0)
         });
 
 
         setForm({
             name: "",
-            quantity: 0,
+            quantity: "",
             unit: "ชิ้น",
         });
 
@@ -94,21 +95,11 @@ export default function AddStockModal({
 
                 </div>
 
-
-
-
-
                 <div className="space-y-4">
-
-
-
                     <div>
-
                         <label className="text-sm font-semibold text-gray-700">
                             ชื่อสินค้า
                         </label>
-
-
                         <input
                             name="name"
                             value={form.name}
@@ -116,7 +107,6 @@ export default function AddStockModal({
                             placeholder="เช่น กุ้งสด"
                             className="mt-1 w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-yellow-400"
                         />
-
                     </div>
 
 
@@ -127,16 +117,14 @@ export default function AddStockModal({
                         <label className="text-sm font-semibold text-gray-700">
                             จำนวนเริ่มต้น
                         </label>
-
-
                         <input
                             name="quantity"
                             type="number"
+                            min="0"
                             value={form.quantity}
                             onChange={handleChange}
                             className="mt-1 w-full border rounded-xl px-4 py-3 text-sm outline-none focus:border-yellow-400"
                         />
-
                     </div>
 
 
