@@ -41,7 +41,7 @@ export default function ImportExcelButton({ onUpload }) {
 
                 <Upload size={18} />
 
-                Import Excel
+                นำเข้าเอกสาร Excel
 
             </button>
 
