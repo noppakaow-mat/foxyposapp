@@ -29,18 +29,18 @@ export default function EmployeeTable({
   }, [users, search]);
 
   return (
-    <section className="rounded-2xl bg-white shadow-lg border border-gray-100 overflow-hidden">
+    <section className="bg-white rounded-2xl shadow-sm p-6">
 
       {/* Header */}
-      <div className="flex flex-col gap-4 p-6 border-b lg:flex-row lg:items-center lg:justify-between">
+      <div className="mb-5 flex flex-col gap-4 lg:flex-row lg:items-center lg:justify-between">
 
         <div>
-          <h2 className="text-2xl font-bold text-gray-800">
-            Employee Management
+          <h2 className="text-lg font-bold text-gray-800">
+            จัดการพนักงาน
           </h2>
 
-          <p className="mt-1 text-sm text-gray-500">
-            จัดการผู้ใช้งานภายในระบบ FoxyPOS
+          <p className="text-sm text-gray-500">
+            เพิ่ม แก้ไข และจัดการสิทธิ์การใช้งานของพนักงาน
           </p>
         </div>
 
@@ -54,10 +54,10 @@ export default function EmployeeTable({
 
             <input
               type="text"
-              placeholder="Search employee..."
+              placeholder="ค้นหาพนักงาน..."
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full rounded-xl border border-gray-300 pl-10 pr-4 py-2 focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300 outline-none"
+              className="w-full rounded-xl border border-gray-300 pl-10 pr-4 py-2 outline-none focus:border-yellow-500 focus:ring-2 focus:ring-yellow-300"
             />
           </div>
 
@@ -66,7 +66,7 @@ export default function EmployeeTable({
             className="flex items-center justify-center gap-2 rounded-xl bg-yellow-500 px-4 py-2 font-semibold text-white transition hover:bg-yellow-600"
           >
             <UserPlus size={18} />
-            Add Employee
+            เพิ่มพนักงาน
           </button>
 
         </div>
@@ -75,30 +75,30 @@ export default function EmployeeTable({
       {/* Table */}
       <div className="overflow-x-auto">
 
-        <table className="min-w-full">
+        <table className="w-full text-sm">
 
-          <thead className="bg-gray-50">
+          <thead>
 
-            <tr className="text-sm uppercase tracking-wide text-gray-500">
+            <tr className="border-b text-gray-500">
 
-              <th className="px-6 py-4 text-center w-16">
+              <th className="py-3 text-left w-16">
                 #
               </th>
 
-              <th className="px-6 py-4 text-left">
-                Employee
+              <th className="py-3 text-left">
+                พนักงาน
               </th>
 
-              <th className="px-6 py-4 text-center">
-                Role
+              <th className="py-3 text-center">
+                ตำแหน่ง
               </th>
 
-              <th className="px-6 py-4 text-center">
-                Created
+              <th className="py-3 text-center">
+                วันที่สร้าง
               </th>
 
-              <th className="px-6 py-4 text-right">
-                Action
+              <th className="py-3 text-center">
+                จัดการ
               </th>
 
             </tr>
@@ -113,18 +113,18 @@ export default function EmployeeTable({
 
                 <tr
                   key={user.id}
-                  className="border-t hover:bg-yellow-50 transition"
+                  className="border-b last:border-none hover:bg-gray-50 transition"
                 >
 
-                  <td className="px-6 py-5 text-center font-semibold">
+                  <td className="py-4 font-semibold text-gray-700">
                     {index + 1}
                   </td>
 
-                  <td className="px-6 py-5">
+                  <td className="py-4">
 
                     <div className="flex items-center gap-3">
 
-                      <div className="flex h-11 w-11 items-center justify-center rounded-full bg-yellow-400 text-lg font-bold text-white">
+                      <div className="flex h-10 w-10 items-center justify-center rounded-full bg-yellow-400 font-semibold text-white">
                         {user.username.charAt(0).toUpperCase()}
                       </div>
 
@@ -135,7 +135,7 @@ export default function EmployeeTable({
                         </p>
 
                         <p className="text-xs text-gray-500">
-                          Employee ID : {user.id}
+                          รหัสพนักงาน : {user.id}
                         </p>
 
                       </div>
@@ -144,40 +144,41 @@ export default function EmployeeTable({
 
                   </td>
 
-                  <td className="px-6 py-5 text-center">
+                  <td className="py-4 text-center">
 
                     <RoleBadge role={user.role} />
 
                   </td>
 
-                  <td className="px-6 py-5 text-center text-gray-500">
+                  <td className="py-4 text-center text-gray-500">
 
                     {user.created_at
-                      ? new Date(
-                          user.created_at
-                        ).toLocaleDateString()
+                      ? new Date(user.created_at).toLocaleDateString("th-TH")
                       : "-"}
 
                   </td>
 
-                  <td className="px-6 py-5">
+                  <td className="py-4">
 
-                    <div className="flex justify-end gap-2">
+                    <div className="flex justify-center gap-2">
 
                       <button
                         onClick={() => onEditRole(user)}
-                        className="rounded-lg bg-blue-100 p-2 text-blue-600 transition hover:bg-blue-600 hover:text-white"
-                        title="Edit Role"
+                        className="group flex h-9 w-9 items-center justify-center rounded-xl bg-blue-100 text-blue-600 transition hover:bg-blue-600 hover:text-white"
+                        title="แก้ไขสิทธิ์"
                       >
-                        <Pencil size={18} />
+                        <Pencil
+                          size={16}
+                          className="transition-colors group-hover:text-white"
+                        />
                       </button>
 
                       <button
                         onClick={() => onDelete(user.id)}
-                        className="rounded-lg bg-red-100 p-2 text-red-600 transition hover:bg-red-600 hover:text-white"
-                        title="Delete"
+                        className="flex h-9 w-9 items-center justify-center rounded-xl bg-red-50 text-red-500 transition hover:bg-red-100"
+                        title="ลบพนักงาน"
                       >
-                        <Trash2 size={18} />
+                        <Trash2 size={16} />
                       </button>
 
                     </div>
@@ -194,7 +195,7 @@ export default function EmployeeTable({
 
                 <td
                   colSpan={5}
-                  className="py-12 text-center text-gray-400"
+                  className="py-8 text-center text-gray-400"
                 >
                   ไม่พบข้อมูลพนักงาน
                 </td>
@@ -208,6 +209,7 @@ export default function EmployeeTable({
         </table>
 
       </div>
+
     </section>
   );
 }
